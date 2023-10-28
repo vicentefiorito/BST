@@ -15,7 +15,12 @@ class Tree{
 
     // builds the tree
     buildTree(arr){
+        // sorted array
         const sortedArr = this.sortArray(arr)
+        // remove duplicates from the sorted array
+        const uniqueArray = this.removeDuplicates(sortedArr)
+        // this gets the length of the array for generation of nodes
+        
         return sortedArr
     }
 
@@ -24,9 +29,15 @@ class Tree{
         const sorted = arr.sort((a,b) => a-b)
         return sorted
     }
+
+    // removes duplicates
+    removeDuplicates(arr){
+        const uniques = [...new Set(arr)]
+        return uniques
+    }
 }
 // testing 
-arr = [5,8,34,23,56,4]
+arr = [5,8,34,23,56,4,5,6,8,63,45]
 tree = new Tree(arr)
 console.log(tree)
 
