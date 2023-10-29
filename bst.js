@@ -54,6 +54,26 @@ class Tree{
         const uniques = [...new Set(arr)]
         return uniques
     }
+
+    // inserts a new key into the BST
+    insert(value,root=this.root){
+        // if the tree is empty, generates a new root with this value
+        if(root === null) {
+            root = new Node(value)
+            return root;
+        }
+
+        // recur down the tree
+        if(value < root.value) {
+            root.left = this.insert(value,root.left)
+        } else if(value > root.value) {
+            root.right = this.insert(value,root.right)
+        }
+
+        // returns the unchanged root pointer
+        return root
+    }
+
 }
 
 // visualization method
@@ -71,6 +91,8 @@ const prettyPrint = (root, prefix = "", isLeft = true) => {
   };
 
 // testing 
-arr = [5,8,34,23,56,4,5,6,8,63,45]
+arr = [7,4,9,5]
 tree = new Tree(arr)
+prettyPrint(tree.root)
+tree.insert(56)
 prettyPrint(tree.root)
