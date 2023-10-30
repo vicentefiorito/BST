@@ -74,35 +74,52 @@ class Tree{
         return root
     }
 
-    // deletes a node from the BST
-    delete(value,root=this.root) {
-        // if root doesn't have any children just return the root
-        if(root === null) {
-            return root
+    delete(value, root = this.root) {
+        if (root === null) {
+            console.log('Cannot delete node as is not in the BST')
+            return root; // Value not found in the BST
         }
-        
-        // recursive call of children of the node to be deleted
-        // happens when the root is the node to be deleted
-        if(root.value > value) {
-            root.left = this.delete(value,root.left)
-            return root
-        } else if(root.value < value) {
-            root.right = this.delete(value,root.right)
-            return root
+      
+        // If the value to be deleted is smaller than the root's value, then it lies in the left subtree
+        if (value < root.value) {
+          root.left = this.delete(value, root.left);
+          return root;
         }
-
-        // If one of the children is empty, meaning a leaf node
-        if(root.left === null) {
-            return root.right
-        } else if(root.right === null) {
-            return root.left
-        } else {
-            // node with both childrens
-
+      
+        // If the value to be deleted is greater than the root's value, then it lies in the right subtree
+        if (value > root.value) {
+          root.right = this.delete(value, root.right);
+          return root;
         }
-
-
+      
+        // If the value is found, this is the node to be deleted
+        // Case 1: Node with only one child or no child
+        if (root.left === null) {
+          return root.right;
+        } else if (root.right === null) {
+          return root.left;
+        }
+      
+        // Case 2: Node with two children
+        // Get the inorder successor (the smallest node in the right subtree)
+        root.value = this.minValue(root.right);
+      
+        // Delete the inorder successor
+        root.right = this.delete(root.value, root.right);
+      
+        return root;
     }
+
+    // helper function to find the inorder successor for node deletion (smallest node in the right subtree)
+    minValue(node) {
+        let current = node;
+        while (current.left !== null) {
+            current = current.left;
+        }
+        return current.value;
+    }
+
+
 
     // function that finds an specific function in the BST
     find(value,root=this.root) {
@@ -144,5 +161,6 @@ tree = new Tree(arr)
 prettyPrint(tree.root)
 tree.insert(56)
 prettyPrint(tree.root)
-tree.find(4)
-tree.find(1)
+tree.delete(7)
+prettyPrint(tree.root)
+tree.delete(23)
