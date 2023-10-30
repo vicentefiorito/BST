@@ -74,6 +74,54 @@ class Tree{
         return root
     }
 
+    // deletes a node from the BST
+    delete(value,root=this.root) {
+        // if root doesn't have any children just return the root
+        if(root === null) {
+            return root
+        }
+        
+        // recursive call of children of the node to be deleted
+        // happens when the root is the node to be deleted
+        if(root.value > value) {
+            root.left = this.delete(value,root.left)
+            return root
+        } else if(root.value < value) {
+            root.right = this.delete(value,root.right)
+            return root
+        }
+
+        // If one of the children is empty, meaning a leaf node
+        if(root.left === null) {
+            return root.right
+        } else if(root.right === null) {
+            return root.left
+        } else {
+            // node with both childrens
+
+        }
+
+
+    }
+
+    // function that finds an specific function in the BST
+    find(value,root=this.root) {
+        // if the value is not in the BST
+        if(root === null) {
+            console.log(`Value: ${value} is not in the BST`)
+            return null
+        }
+        
+        if(value === root.value) {
+            console.log(`Value: ${value} has been found in the bst`)
+            return root
+        }
+        // if the value is less than the current root, we look to the left subtree
+        if(value < root.value) return this.find(value,root.left)
+        // if the value is greater than the current root, we look to the right subtree
+        if(value > root.value) return this.find(value,root.right)
+
+    }
 }
 
 // visualization method
@@ -96,3 +144,5 @@ tree = new Tree(arr)
 prettyPrint(tree.root)
 tree.insert(56)
 prettyPrint(tree.root)
+tree.find(4)
+tree.find(1)
