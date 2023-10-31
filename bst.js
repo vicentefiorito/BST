@@ -137,7 +137,29 @@ class Tree{
         if(value < root.value) return this.find(value,root.left)
         // if the value is greater than the current root, we look to the right subtree
         if(value > root.value) return this.find(value,root.right)
+    }
 
+    // function that gives the level order traversal of the BST
+    levelOrder(func = null) {
+        let result = []
+        // if the tree is empty
+        if(this.root === null) {
+            return
+        }
+        // traverse through the tree
+        let queue = [this.root]
+        while(queue.length > 0) {
+            let current = queue.shift()
+            result.push(current.value)
+            if(current.left !== null) {
+                queue.push(current.left)
+            }
+            if(current.right !== null) {
+                queue.push(current.right)
+            }
+        }
+        console.log('LevelOrder traversal --> ', result)
+        return result;
     }
 }
 
@@ -156,11 +178,7 @@ const prettyPrint = (root, prefix = "", isLeft = true) => {
   };
 
 // testing 
-arr = [7,4,9,5]
+arr = [4,67,23,56]
 tree = new Tree(arr)
 prettyPrint(tree.root)
-tree.insert(56)
-prettyPrint(tree.root)
-tree.delete(7)
-prettyPrint(tree.root)
-tree.delete(23)
+tree.levelOrder()
