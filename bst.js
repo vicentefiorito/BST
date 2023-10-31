@@ -11,6 +11,7 @@ class Node{
 class Tree{
     constructor(arr){
         this.root = this.buildTree(arr)
+        this.inOrderTraversal = []
     }
 
     // builds the tree
@@ -139,8 +140,13 @@ class Tree{
         if(value > root.value) return this.find(value,root.right)
     }
 
+    // callback function that pushes the node into the traversal array
+    traversal(arr,value) {
+        arr.push(value)
+    }
+
     // function that gives the level order traversal of the BST
-    levelOrder(func = null) {
+    levelOrder(func = this.traversal) {
         let result = []
         // if the tree is empty
         if(this.root === null) {
@@ -150,7 +156,7 @@ class Tree{
         let queue = [this.root]
         while(queue.length > 0) {
             let current = queue.shift()
-            result.push(current.value)
+            func(result,current.value)
             if(current.left !== null) {
                 queue.push(current.left)
             }
@@ -160,6 +166,22 @@ class Tree{
         }
         console.log('LevelOrder traversal --> ', result)
         return result;
+    }
+
+    // main function that calls the inorder traversal
+    inOrder(){
+        this.inOrderTraversal = []
+        return this.inOrderRec()
+    }
+
+    // helper function that gives the inorder traversal of the BST
+    inOrderRec(func = this.traversal, root = this.root) {
+        let result = []
+        if(root === null) return
+        this.inOrderRec(func,root.left)
+        func(this.inOrderTraversal,root.value)
+        this.inOrderRec(func,root.right)
+        return this.inOrderTraversal
     }
 }
 
@@ -182,3 +204,4 @@ arr = [4,67,23,56]
 tree = new Tree(arr)
 prettyPrint(tree.root)
 tree.levelOrder()
+console.log('InOrder Traversal --> ',tree.inOrder())
