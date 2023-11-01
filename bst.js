@@ -12,6 +12,8 @@ class Tree{
     constructor(arr){
         this.root = this.buildTree(arr)
         this.inOrderTraversal = []
+        this.preOrderTraversal = []
+        this.postOrderTraversal = []
     }
 
     // builds the tree
@@ -170,19 +172,51 @@ class Tree{
 
     // main function that calls the inorder traversal
     inOrder(){
-        this.inOrderTraversal = []
         return this.inOrderRec()
     }
 
     // helper function that gives the inorder traversal of the BST
     inOrderRec(func = this.traversal, root = this.root) {
-        let result = []
         if(root === null) return
+        // traverse the tree --> left --> root --> right
         this.inOrderRec(func,root.left)
         func(this.inOrderTraversal,root.value)
         this.inOrderRec(func,root.right)
         return this.inOrderTraversal
     }
+
+    // main function that calls the preorder
+    preOrder() {
+        return this.preOrderRec()
+    }
+
+    // helper function that recursively gives the preorder traversal of the BST
+    preOrderRec(func = this.traversal, root = this.root) {
+        // if tree is empty
+        if(root === null) return
+        // traverses the tree --> root --> left --> right
+        func(this.preOrderTraversal,root.value)
+        this.preOrderRec(func,root.left)
+        this.preOrderRec(func,root.right)
+        return this.preOrderTraversal
+    }
+
+    // main function that calls the postorder function
+    postOrder() {
+        return this.postOrderRec()
+    }
+
+     // helper function that recursively gives the postorder traversal of the BST
+     postOrderRec(func = this.traversal, root = this.root) {
+        // if tree is empty
+        if(root === null) return
+        // traverses the tree --> left --> right --> root
+        this.postOrderRec(func,root.left)
+        this.postOrderRec(func,root.right)
+        func(this.postOrderTraversal,root.value)
+        return this.postOrderTraversal
+    }
+
 }
 
 // visualization method
@@ -205,3 +239,5 @@ tree = new Tree(arr)
 prettyPrint(tree.root)
 tree.levelOrder()
 console.log('InOrder Traversal --> ',tree.inOrder())
+console.log('PreOrder Traversal --> ',tree.preOrder())
+console.log('PostOrder Traversal --> ',tree.postOrder())
