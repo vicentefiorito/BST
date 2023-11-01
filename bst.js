@@ -237,6 +237,22 @@ class Tree{
         if(node.value > root.value) return this.depth(node,root.right) + 1
     }
 
+    // function that checks if the tree is balanced
+    isBalanced(root=this.root) {
+        // if the tree is empty
+        if(root === null) return true
+        // find height of left and right subtree
+        let leftHeight = this.height(root.left)
+        let rightHeight = this.height(root.right)
+
+        // if the difference between the heights is greater than 1, then the tree is unbalanced and we return false
+        if(Math.abs(leftHeight - rightHeight) > 1) return false
+
+        // return true if the check passes
+        return true
+
+    }
+
 }
 
 // visualization method
@@ -256,7 +272,10 @@ const prettyPrint = (root, prefix = "", isLeft = true) => {
 // testing 
 arr = [4,67,23,56]
 tree = new Tree(arr)
+tree.insert(85)
+tree.insert(3)
 prettyPrint(tree.root)
 let test = tree.find(4)
 console.log(tree.height(test))
 console.log(tree.depth(test))
+console.log(tree.isBalanced())
