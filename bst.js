@@ -238,7 +238,7 @@ class Tree{
     }
 
     // function that checks if the tree is balanced
-    isBalanced(root=this.root) {
+    isBalanced(root = this.root) {
         // if the tree is empty
         if(root === null) return true
         // find height of left and right subtree
@@ -251,6 +251,12 @@ class Tree{
         // return true if the check passes
         return true
 
+    }
+
+    // function that rebalances the tree
+    rebalance() {
+        let rebalancedArray = this.inOrder()
+        this.root = this.buildTree(rebalancedArray)
     }
 
 }
@@ -274,8 +280,11 @@ arr = [4,67,23,56]
 tree = new Tree(arr)
 tree.insert(85)
 tree.insert(3)
+tree.insert(105)
 prettyPrint(tree.root)
-let test = tree.find(4)
+let test = tree.find(67)
 console.log(tree.height(test))
 console.log(tree.depth(test))
 console.log(tree.isBalanced())
+tree.rebalance()
+prettyPrint(tree.root)
