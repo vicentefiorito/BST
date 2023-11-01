@@ -217,6 +217,16 @@ class Tree{
         return this.postOrderTraversal
     }
 
+    // function to return the height of a node
+    height(node) {
+        // if the tree is empty, -1 because there is an empty pointer to null if there is a leaf node
+        if(node === null) return -1
+        // recursively find the height of the left subtree and rightsubtree
+        let leftHeight = this.height(node.left)
+        let rightHeight = this.height(node.right)
+        return Math.max(leftHeight,rightHeight) + 1
+    }
+
 }
 
 // visualization method
@@ -237,7 +247,5 @@ const prettyPrint = (root, prefix = "", isLeft = true) => {
 arr = [4,67,23,56]
 tree = new Tree(arr)
 prettyPrint(tree.root)
-tree.levelOrder()
-console.log('InOrder Traversal --> ',tree.inOrder())
-console.log('PreOrder Traversal --> ',tree.preOrder())
-console.log('PostOrder Traversal --> ',tree.postOrder())
+let test = tree.find(56)
+console.log(tree.height(test))
