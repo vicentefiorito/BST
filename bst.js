@@ -227,6 +227,16 @@ class Tree{
         return Math.max(leftHeight,rightHeight) + 1
     }
 
+    // function that returns the depth of a node
+    depth(node,root= this.root) {
+        // if the node you are looking for is the root, depth 0
+        if(node.value === root.value) return 0
+        // if the value you are looking for is less than the root, calculate the depth of the left subtree and add 1 to the depth
+        if(node.value < root.value) return this.depth(node,root.left) + 1
+        // if the value you are looking for is greater than the root, calculate the depth of the right subtree and add 1 to the depth
+        if(node.value > root.value) return this.depth(node,root.right) + 1
+    }
+
 }
 
 // visualization method
@@ -247,5 +257,6 @@ const prettyPrint = (root, prefix = "", isLeft = true) => {
 arr = [4,67,23,56]
 tree = new Tree(arr)
 prettyPrint(tree.root)
-let test = tree.find(56)
+let test = tree.find(4)
 console.log(tree.height(test))
+console.log(tree.depth(test))
