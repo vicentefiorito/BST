@@ -160,7 +160,7 @@ export default class Tree {
                 queue.push(current.right);
             }
         }
-        console.log('LevelOrder traversal --> ', result);
+
         return result;
     }
 

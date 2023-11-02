@@ -15,16 +15,47 @@ const prettyPrint = (root, prefix = "", isLeft = true) => {
     }
   };
 
-// testing 
-const arr = [4,67,23,56]
+//   generate array from where the tree will be formed
+const generateRandomArray = (n) => {
+    let res = []
+    for(let i = 0; i < n; i++) {
+        const num = Math.floor(Math.random() * 101)
+        res[i] = num
+    }
+    return res
+}
+
+// adds a number to the tree
+const addNumber = (n) => {
+    const res = generateRandomArray(n)
+    for(let i = 0; i < n; i++) {
+        tree.insert(res[i])
+    }
+}
+
+
+// driver script
+const arr = generateRandomArray(9)
 const tree = new Tree(arr)
-tree.insert(85)
-tree.insert(3)
-tree.insert(105)
 prettyPrint(tree.root)
-let test = tree.find(67)
-console.log(tree.height(test))
-console.log(tree.depth(test))
-console.log(tree.isBalanced())
+console.log('Is the Tree balanced?: ',tree.isBalanced(tree.root)) //true
+console.log('Level Order Traversal --> ',tree.levelOrder())
+console.log('Pre Order Traversal --> ', tree.preOrder())
+console.log('In Order Traversal --> ',tree.inOrder())
+console.log('In Order Traversal --> ',tree.postOrder())
+
+addNumber(101) //adds 101 random numbers to the tree
+prettyPrint(tree.root)
+console.log('Is the Tree balanced?: ',tree.isBalanced()) //false
 tree.rebalance()
+
 prettyPrint(tree.root)
+console.log('Is the Tree balanced?: ',tree.isBalanced()) //true
+console.log('Level Order Traversal --> ',tree.levelOrder())
+console.log('Pre Order Traversal --> ', tree.preOrder())
+console.log('In Order Traversal --> ',tree.inOrder())
+console.log('In Order Traversal --> ',tree.postOrder())
+
+
+
+
